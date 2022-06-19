@@ -6,6 +6,7 @@ import sys
 from django.utils.deprecation import MiddlewareMixin
 from urllib3 import HTTPResponse
 from .models import *
+from django.shortcuts import redirect, render
 
 # from django.renderers
 
@@ -46,12 +47,21 @@ class MemoryUsageMiddleware(MiddlewareMixin):
 
 class SetLastVisitMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
+        paths = ['/home', '/login', '/', '/logout',
+                 '/check', '/cpu', '/accounts/login/', '/error']
         if request.user.is_authenticated:
             # Update last visit time after request finished processing.
             now2 = user.objects.get(email=request.user).last_login.strftime(
                 '%y-%m-%d %a %H:%M:%S')
+            print(now2)
+            user.objects.filter(pk=request.user).update(
+                last_login=now())
 
             print("user:", now2)
             if request.path == '/home':
                 return render(request, 'home.html', {"name": now2})
+            elif request.path not in paths:
+                return render(request, 'error2.html', {})
+        elif request.path not in paths:
+            return redirect('error')
         return response

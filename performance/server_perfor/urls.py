@@ -24,6 +24,8 @@ urlpatterns = [
     path('logout', views.logoutuser, name='logoutuser'),
     path('check', views.check_cpu, name='check'),
     path('cpu', views.cpu, name='cpu'),
-    path('accounts/login/', views.error, name='accounts/login')
+    path('accounts/login/', views.error, name='accounts/login'),
+    path('error', views.error, name='error'),
+    path('error2', views.error2, name='error2'),
 
 ]

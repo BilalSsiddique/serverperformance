@@ -95,11 +95,16 @@ def check_cpu(request):
 
 def error(request):
     return render(request, 'error.html', {})
+
+
+def error2(request):
+    return render(request, 'error2.html', {})
 # def cpu(request):
 #     import matplotlib.pyplot as plt
 #     from matplotlib.animation import FuncAnimation
 
-
+# def path_not_avai(request):
+#     if request.path
 #     FuncAnimation(plt.gcf(),plot_cpu,interval=1000)
 # def plot_cpu():
 #     import psutil
@@ -112,6 +117,7 @@ def error(request):
 #         plt.cla()
 #         plt.plot(y,'r',label='Real-Time CPU usage')
 #     plt.tight_layout()
+
 
 frame_len = 200
 y = []
