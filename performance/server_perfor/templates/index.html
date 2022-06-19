@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: #7abecc !important;
+    }
+
+    .for {
+        display: flex;
+        place-items: center;
+        place-content: center;
+        margin: 0;
+        height: 85vh;
+        flex-direction: column;
+        margin-top: 55px;
+        /* width: 20px; */
+        border: 2px solid #74cfbf;
+        background: #74cfbf;
+        padding: 5px 10px;
+
+
+
+    }
+
+    .button {
+
+        background-color: blue;
+        color: white;
+        padding: 5px 80px;
+        border: none;
+        border-radius: 15px;
+        margin-top: 5px;
+
+
+    }
+
+    .form-group {
+        border: 2px solid blue;
+
+    }
+
+    #form-title {
+        color: #fff;
+        font-size: 40px;
+
+    }
+
+    input {
+        border: none;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    select {
+        border: none;
+        padding: 3px 50px;
+        font-weight: bolder;
+    }
+</style>
+
+<body>
+    <form class="for text-dark container" method="post" action="">
+        <h3 id="form-title">Register</h3>
+        {% csrf_token %}
+        {% for field in user %}
+        <label class="my_class">{{ field.label }}</label>
+        {{field}}
+        {% endfor %}
+        {% if user.errors %}
+        {% for field in user %}
+        {% for error in field.errors %}
+        <div class="mt-2 alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% endif %}
+
+
+
+        <button class="button font-weight-bold btn btn-primary" type='submit'>Register</button>
+
+        <div class="mt-2">
+            <div class="d-flex justify-content-center links text-dark font-weight-bold">
+                Already have a account? <a href="{% url 'login' %}"
+                    class="font-weight-bold ml-2 p-1 pt-1 mr-2 text-dark  btn btn-primary">Log
+                    in</a>
+                {% if home %}
+                <a class="btn btn-primary text-dark font-weight-bold p-2" href="{% url 'home' %}">Home</a>
+                {% endif %}
+            </div>
+
+        </div>
+    </form>
+
+    <!-- {% if user.errors %}
+    <div class="alert alert-danger">
+        {{ user.errors }}
+    </div>
+    {% endif %} -->
+
+
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
