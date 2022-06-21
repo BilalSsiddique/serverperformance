@@ -11,6 +11,8 @@ from django.shortcuts import redirect, render
 # from django.renderers
 
 THRESHOLD = 2*1024*1024
+paths = ['/home', '/login', '/', '/logout',
+         '/check', '/cpu', '/accounts/login/', '/error']
 
 
 class MemoryUsageMiddleware(MiddlewareMixin):
@@ -35,7 +37,7 @@ class MemoryUsageMiddleware(MiddlewareMixin):
     # # Calling psutil.cpu_precent() for 5 seconds
     #     print('The CPU usage is: ', psutil.cpu_percent(5))
         print(request.path)
-        if request.path == '/check':
+        if request.path in paths:
             return render(request, "home.html", {"vm": psutil.virtual_memory()[2], "cpu": psutil.cpu_percent(5), "sys": user, "mem": diff, "req": request.path})
     # return render(request, "home.html", {"sys": user, "mem": diff, "req": request.path})
         return response
@@ -47,8 +49,7 @@ class MemoryUsageMiddleware(MiddlewareMixin):
 
 class SetLastVisitMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
-        paths = ['/home', '/login', '/', '/logout',
-                 '/check', '/cpu', '/accounts/login/', '/error']
+
         if request.user.is_authenticated:
             # Update last visit time after request finished processing.
             now2 = user.objects.get(email=request.user).last_login.strftime(
